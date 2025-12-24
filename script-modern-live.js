@@ -445,15 +445,7 @@ const eventData = {
     }
 
     loadTheme() {
-        const savedTheme = localStorage.getItem('gogreen-theme');
-        const themeIcon = document.querySelector('.theme-icon');
-        
-        if (savedTheme === 'light') {
-            document.body.setAttribute('data-theme', 'light');
-            if (themeIcon) themeIcon.textContent = '☀️';
-        } else {
-            if (themeIcon) themeIcon.textContent = '🌙';
-        }
+        // Theme loading is now handled in DOMContentLoaded
     }
 }
 
@@ -464,14 +456,27 @@ function toggleTheme() {
     
     if (body.getAttribute('data-theme') === 'light') {
         body.removeAttribute('data-theme');
-        themeIcon.textContent = '🌙';
+        if (themeIcon) themeIcon.textContent = '🌙';
         localStorage.setItem('gogreen-theme', 'dark');
     } else {
         body.setAttribute('data-theme', 'light');
-        themeIcon.textContent = '☀️';
+        if (themeIcon) themeIcon.textContent = '☀️';
         localStorage.setItem('gogreen-theme', 'light');
     }
 }
+
+// Initialize theme on load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('gogreen-theme');
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    if (savedTheme === 'light') {
+        document.body.setAttribute('data-theme', 'light');
+        if (themeIcon) themeIcon.textContent = '☀️';
+    } else {
+        if (themeIcon) themeIcon.textContent = '🌙';
+    }
+});
 
 // Live notification system
 class LiveNotifications {
